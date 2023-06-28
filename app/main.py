@@ -217,8 +217,10 @@ def servicehealthMonitor():
                     produceKafka(producer, {"inference_name": inference_name, "result": servicehealth_result})
                 except Exception as err:
                     logger.warning(err)
-
-            producer.close()
+            try:
+                producer.close()
+            except:
+                logger.warning("producer error")
     threading.Timer(60, servicehealthMonitor).start()
 
 
